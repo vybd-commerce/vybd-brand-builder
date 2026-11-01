@@ -1,0 +1,36 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: vybd
+          POSTGRES_PASSWORD: vybd
+          POSTGRES_DB: vybd
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U vybd -d vybd"
+          --health-interval 2s --health-timeout 3s --health-retries 30
+    env:
+      DATABASE_URL: postgresql+psycopg://vybd:vybd@localhost:5432/vybd
+      TEST_DATABASE_URL: postgresql+psycopg://vybd:vybd@localhost:5432/vybd_test
+      LLM_PROVIDER: fake
+      EMBED_PROVIDER: fake
+      REQUIRE_DB_TESTS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv python install 3.12
+      - run: uv sync
+      - run: make lint
+      - run: make migrate
+      - run: make test
+      - run: make e2e-fake

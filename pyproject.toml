@@ -1,0 +1,61 @@
+[project]
+name = "vybd-brand-builder"
+version = "0.0.0"
+description = "Vybd Brand Builder — workspace root (not a package)"
+requires-python = ">=3.12,<3.13"
+dependencies = ["vybd-brain", "vybd-server", "vybd-runner", "vybd-cli"]
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["packages/*"]
+
+[tool.uv.sources]
+vybd-brain = { workspace = true }
+vybd-server = { workspace = true }
+vybd-runner = { workspace = true }
+vybd-cli = { workspace = true }
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "ruff>=0.6",
+    "import-linter>=2.1",
+    "python-docx>=1.1",  # scripts/import_example-brand.py
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "packages"]
+addopts = "--import-mode=importlib -m 'not live'"
+markers = [
+    "live: calls real LLM/embedding providers (needs LLM_API_KEY); run with -m live",
+    "db: needs Postgres (docker compose up); skipped automatically if unreachable",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+# Shared module-level TypeVar `T` is reused across provider signatures; keep Generic[T].
+ignore = ["UP046", "UP047"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["brain", "server", "runner", "vybd_cli"]
+
+[tool.importlinter]
+root_packages = ["brain", "server", "runner", "vybd_cli"]
+
+[[tool.importlinter.contracts]]
+name = "brain is a standalone library"
+type = "forbidden"
+source_modules = ["brain"]
+forbidden_modules = ["server", "runner", "vybd_cli"]
+
+[[tool.importlinter.contracts]]
+name = "cli talks to the server over HTTP only"
+type = "forbidden"
+source_modules = ["vybd_cli"]
+forbidden_modules = ["brain", "server", "runner"]
