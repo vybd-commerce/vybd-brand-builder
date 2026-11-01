@@ -1,0 +1,22 @@
+id: goals
+version: 1
+order: 9
+section: goals
+required: true
+est_minutes: 1
+title: "What should the Brand Brain focus on?"
+lesson: >
+  The Brand Brain run works best with a clear focus. Tell it the decision or
+  question that matters most right now: launching, growth, pricing, channels,
+  or something else.
+example: >
+  "Help me decide between grocery wholesale and selling online for the first
+  six months, and whether $9 or $12 is the right price."
+task: >
+  What do you most want help with in your Brand Brain run?
+agent_instructions: >
+  Ask what they want the run to focus on. If they say "everything", ask for the
+  one decision they're stuck on right now. At most one follow-up, then submit
+  their words. After this, tell them the brief is ready to submit.
+quick_replies: ["Launch plan", "Growth", "Pricing", "Picking channels"]
+min_chars: 15

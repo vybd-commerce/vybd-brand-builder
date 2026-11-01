@@ -1,0 +1,21 @@
+id: channels
+version: 1
+order: 7
+section: channels
+required: true
+est_minutes: 1
+title: "Where will they buy?"
+lesson: >
+  Go where your first customers already spend time and money, not everywhere at
+  once. One channel done well beats five done badly.
+example: >
+  Glossier grew out of the Into The Gloss beauty blog and sold directly online
+  to readers who already trusted it.
+task: >
+  Where will your first customers find you, and where will they actually buy?
+agent_instructions: >
+  Ask where first customers will discover and buy the product. If they list
+  many channels, ask which one they'd start with. At most one follow-up, then
+  submit their words.
+quick_replies: ["Our own website", "Instagram / TikTok", "Amazon", "Local stores / markets"]
+min_chars: 15

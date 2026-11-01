@@ -1,0 +1,22 @@
+id: alternative
+version: 1
+order: 4
+section: alternative
+required: true
+est_minutes: 1
+title: "What do they use now?"
+lesson: >
+  Your real competitor is usually whatever people do today: a big brand, a
+  workaround, or nothing at all. Knowing why that falls short tells you what to
+  promise.
+example: >
+  Before Dollar Shave Club, men paid high prices for cartridges often locked
+  behind store counters. The alternative worked; it just felt like a rip-off.
+task: >
+  What do they buy or do instead today, and why does it fall short?
+agent_instructions: >
+  Ask what the customer uses today instead. "Nothing" is a valid answer, but ask
+  what they do about the problem in that case. Get both parts: the alternative
+  and why it falls short. At most two follow-ups, then submit their words.
+quick_replies: ["Nothing — they just put up with it", "A big-brand product", "A DIY workaround"]
+min_chars: 30

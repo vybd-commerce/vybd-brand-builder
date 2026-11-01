@@ -1,0 +1,23 @@
+id: problem
+version: 1
+order: 3
+section: problem
+required: true
+est_minutes: 1
+title: "What's the problem?"
+lesson: >
+  People buy relief from a frustration they already feel. Name the moment it
+  bites: when, where, and what it costs them in time, money, or pride. If you
+  can't name it, you're selling a feature, not a fix.
+example: >
+  Sara Blakely couldn't find an undergarment that looked smooth under white
+  pants, so she cut the feet off her pantyhose. That frustration became Spanx.
+task: >
+  What frustrates your first customer today? Describe the moment it happens.
+agent_instructions: >
+  Ask what frustrates their customer, in your own words. If the answer is about
+  the founder's product ("they need my app"), ask what the customer would
+  complain about if the product didn't exist. One follow-up at most, then
+  submit their words.
+quick_replies: []
+min_chars: 30

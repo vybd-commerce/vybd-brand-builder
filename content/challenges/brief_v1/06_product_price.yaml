@@ -1,0 +1,22 @@
+id: product_price
+version: 1
+order: 6
+section: product
+required: true
+est_minutes: 1.5
+title: "What and how much?"
+lesson: >
+  Launch with as few products as possible so you learn fast. Price is part of
+  the brand: it tells people what to expect before they try it. A rough range
+  is fine for now.
+example: >
+  Allbirds launched in 2016 with essentially one shoe, the Wool Runner, at $95.
+task: >
+  What's your first product (or two), and what will it cost, roughly?
+agent_instructions: >
+  Ask for the first product(s) and a price or price range. If they have no
+  price yet, ask what they'd guess a customer would pay, and accept a range.
+  Make sure both parts are covered. At most two follow-ups, then submit their
+  words.
+quick_replies: []
+min_chars: 20

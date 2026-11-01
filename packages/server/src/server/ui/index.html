@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vybd Brand View</title>
+<style>
+  :root {
+    --bg: #f6f5f1; --panel: #ffffff; --ink: #1d1c1a; --muted: #6f6b63; --line: #e4e1d9;
+    --accent: #c2410c; --accent-soft: #fdeee4; --ok: #15803d; --ok-soft: #e7f5ec;
+    --warn: #a16207; --warn-soft: #fbf3dc; --flash: #fff4c2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #151413; --panel: #1f1d1b; --ink: #ecebe7; --muted: #a29d93; --line: #34312d;
+      --accent: #fb923c; --accent-soft: #3a2518; --ok: #4ade80; --ok-soft: #173023;
+      --warn: #facc15; --warn-soft: #362d10; --flash: #4a3f12; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center;
+    padding: 14px 20px; border-bottom: 1px solid var(--line); background: var(--panel);
+    position: sticky; top: 0; z-index: 2; }
+  h1 { font-size: 18px; margin: 0; letter-spacing: -0.01em; }
+  h1 small { color: var(--muted); font-weight: 400; }
+  select, button, input { font: inherit; color: inherit; background: var(--bg);
+    border: 1px solid var(--line); border-radius: 6px; padding: 5px 9px; }
+  button { cursor: pointer; }
+  .grow { flex: 1; }
+  .meter { display: flex; align-items: center; gap: 10px; min-width: 260px; }
+  .bar { flex: 1; height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; }
+  .bar > div { height: 100%; background: var(--accent); transition: width .6s ease; }
+  .pill { font-size: 12px; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+  .pill.ok { background: var(--ok-soft); color: var(--ok); }
+  .pill.warn { background: var(--warn-soft); color: var(--warn); }
+  .pill.accent { background: var(--accent-soft); color: var(--accent); }
+  .muted { color: var(--muted); }
+  main { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px;
+    padding: 20px; max-width: 1400px; margin: 0 auto; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; padding: 16px; } }
+  section.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 16px 18px; margin-bottom: 20px; }
+  section.card h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em;
+    color: var(--muted); margin: 0 0 12px; display: flex; justify-content: space-between; }
+  .sec { padding: 10px 0; border-top: 1px solid var(--line); }
+  .sec:first-of-type { border-top: 0; }
+  .sec h3 { font-size: 15px; margin: 0 0 6px; }
+  .sec.empty h3 { color: var(--muted); font-weight: 500; }
+  .sec ul { margin: 0; padding-left: 18px; }
+  .sec li { margin: 3px 0; border-radius: 4px; transition: background 2.5s ease; }
+  .sec li.new { background: var(--flash); }
+  .kind { font-size: 11px; color: var(--muted); margin-left: 6px; }
+  .ch { display: grid; grid-template-columns: 20px 1fr; gap: 4px 8px; padding: 8px 0;
+    border-top: 1px solid var(--line); }
+  .ch:first-of-type { border-top: 0; }
+  .ch .tick { color: var(--ok); font-weight: 700; }
+  .ch .todo { color: var(--line); }
+  .ch .ans { grid-column: 2; font-size: 13px; color: var(--muted); }
+  .ch .fb { grid-column: 2; font-size: 13px; border-left: 3px solid var(--accent);
+    padding-left: 8px; }
+  .events { font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; max-height: 260px;
+    overflow: auto; background: var(--bg); border-radius: 6px; padding: 8px; }
+  .events div { white-space: pre-wrap; word-break: break-word; }
+  .prop { padding: 10px 0; border-top: 1px solid var(--line); }
+  .prop:first-of-type { border-top: 0; }
+  .report { overflow-x: auto; }
+  .report table { border-collapse: collapse; font-size: 13px; }
+  .report td, .report th { border: 1px solid var(--line); padding: 4px 8px; vertical-align: top; }
+  .report h1 { font-size: 20px; } .report h2 { font-size: 16px; margin-top: 18px; }
+  #login { max-width: 520px; margin: 80px auto; padding: 0 16px; }
+  #login input { width: 100%; margin: 8px 0; }
+  .err { color: var(--accent); font-size: 13px; }
+</style>
+</head>
+<body>
+<div id="login" hidden>
+  <h1>Vybd Brand View</h1>
+  <p class="muted">Paste your API token (run <code>vybd ui</code> to open this page signed in, or
+    copy <code>token</code> from <code>~/.vybd/config.toml</code>).</p>
+  <input id="tok" type="password" placeholder="vybd_..." autocomplete="off">
+  <button id="go">Open</button> <span id="loginErr" class="err"></span>
+</div>
+
+<div id="app" hidden>
+  <header>
+    <h1>Vybd <small>brand view</small></h1>
+    <select id="brand" aria-label="Brand"></select>
+    <div class="meter grow">
+      <div class="bar" aria-hidden="true"><div id="barFill" style="width:0"></div></div>
+      <span id="scoreText" class="muted">-</span>
+      <span id="elig" class="pill warn">not eligible</span>
+    </div>
+    <span id="updated" class="muted" style="font-size:12px"></span>
+    <button id="logout" title="Forget token">Sign out</button>
+  </header>
+  <main>
+    <div>
+      <section class="card">
+        <h2><span>Brand brief</span><span id="briefMeta"></span></h2>
+        <div id="brief"></div>
+      </section>
+      <section class="card" id="reportCard" hidden>
+        <h2><span>Latest run report</span></h2>
+        <div id="report" class="report"></div>
+      </section>
+    </div>
+    <div>
+      <section class="card">
+        <h2><span>Challenges</span><span id="chMeta"></span></h2>
+        <div id="challenges"></div>
+      </section>
+      <section class="card">
+        <h2><span>Brand Brain run</span><span id="runPill"></span></h2>
+        <div id="run" class="muted">No run yet.</div>
+      </section>
+      <section class="card">
+        <h2><span>Proposals</span><span id="propMeta"></span></h2>
+        <div id="proposals" class="muted">None yet.</div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script>
+(() => {
+  const POLL_MS = 3000;
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g,
+    (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const store = {
+    get(k) { try { return localStorage.getItem("vybd." + k); } catch { return null; } },
+    set(k, v) { try { v == null ? localStorage.removeItem("vybd." + k)
+                                : localStorage.setItem("vybd." + k, v); } catch {} },
+  };
+
+  // token/brand can arrive in the URL fragment (never sent to the server), e.g. from `vybd ui`
+  const frag = new URLSearchParams(location.hash.slice(1));
+  if (frag.get("token")) store.set("token", frag.get("token"));
+  if (frag.get("brand")) store.set("brand", frag.get("brand"));
+  if (location.hash) history.replaceState(null, "", location.pathname);
+
+  let token = store.get("token");
+  let brandId = store.get("brand");
+  const seenClaims = new Set();
+  let firstRender = true;
+  let timer = null;
+
+  async function api(path) {
+    const r = await fetch(path, { headers: { Authorization: "Bearer " + token } });
+    const body = await r.json().catch(() => ({ ok: false, errors: [{ message: r.statusText }] }));
+    if (r.status === 401) throw Object.assign(new Error("unauthorized"), { auth: true });
+    return body;
+  }
+
+  function showLogin(msg) {
+    $("app").hidden = true; $("login").hidden = false; $("loginErr").textContent = msg || "";
+    clearTimeout(timer);
+  }
+
+  async function start() {
+    if (!token) return showLogin();
+    try {
+      const b = await api("/v1/brands");
+      const brands = b.data?.brands || [];
+      if (!brands.length) return showLogin("This account has no brands yet. Create one with `vybd brand create`.");
+      if (!brandId || !brands.some((x) => x.id === brandId)) brandId = brands[brands.length - 1].id;
+      store.set("brand", brandId);
+      $("brand").innerHTML = brands.map((x) =>
+        `<option value="${x.id}" ${x.id === brandId ? "selected" : ""}>${esc(x.name)}</option>`).join("");
+      $("login").hidden = true; $("app").hidden = false;
+      tick();
+    } catch (e) { showLogin(e.auth ? "That token wasn't accepted." : "Can't reach the server."); }
+  }
+
+  async function tick() {
+    clearTimeout(timer);
+    try { await refresh(); $("updated").textContent = "updated " + new Date().toLocaleTimeString(); }
+    catch (e) { if (e.auth) return showLogin("Session expired."); $("updated").textContent = "offline, retrying"; }
+    timer = setTimeout(tick, POLL_MS);
+  }
+
+  async function refresh() {
+    const base = `/v1/brands/${brandId}`;
+    const [brief, chals, runs, props] = await Promise.all([
+      api(base + "/brief"), api(base + "/challenges"), api(base + "/runs"),
+      api(base + "/proposals?status=all"),
+    ]);
+    renderProgress(brief.progress);
+    renderBrief(brief.data);
+    renderChallenges(chals.data?.challenges || []);
+    await renderRun(runs.data?.runs?.[0]);
+    renderProposals(props.data?.proposals || []);
+    firstRender = false;
+  }
+
+  function renderProgress(p) {
+    if (!p) return;
+    const score = p.score ?? Math.round(100 * p.completed / Math.max(1, p.required));
+    $("barFill").style.width = Math.min(100, score) + "%";
+    $("scoreText").textContent = `${p.completed}/${p.required} required · score ${score} · ~${p.est_minutes_left} min left`;
+    const el = $("elig");
+    el.textContent = p.eligible ? "ready to submit" : "not eligible yet";
+    el.className = "pill " + (p.eligible ? "ok" : "warn");
+  }
+
+  function renderBrief(d) {
+    if (!d) return;
+    $("briefMeta").textContent = `v${d.version.slice(0, 8)} · ${d.claim_count} claims`;
+    $("brief").innerHTML = d.sections.map((s) => {
+      if (!s.claims.length) return `<div class="sec empty"><h3>${esc(s.title)}</h3></div>`;
+      const items = s.claims.map((c) => {
+        const isNew = !firstRender && !seenClaims.has(c.id);
+        seenClaims.add(c.id);
+        return `<li class="${isNew ? "new" : ""}">${esc(c.text)}<span class="kind">${esc(c.kind)}${c.confidence < 0.6 ? " · low confidence" : ""}</span></li>`;
+      }).join("");
+      return `<div class="sec"><h3>${esc(s.title)}</h3><ul>${items}</ul></div>`;
+    }).join("");
+    requestAnimationFrame(() => document.querySelectorAll("li.new").forEach((li) =>
+      setTimeout(() => li.classList.remove("new"), 50)));
+  }
+
+  function renderChallenges(list) {
+    const done = list.filter((c) => c.status === "answered").length;
+    $("chMeta").textContent = `${done}/${list.length}`;
+    $("challenges").innerHTML = list.map((c) => {
+      const fb = c.feedback?.note ? `<div class="fb">${esc(c.feedback.note)}${c.feedback.suggestion ? `<br><span class="muted">${esc(c.feedback.suggestion)}</span>` : ""}</div>` : "";
+      return `<div class="ch"><span class="${c.status === "answered" ? "tick" : "todo"}">${c.status === "answered" ? "✓" : "○"}</span>
+        <span>${esc(c.title)} ${c.required ? "" : '<span class="pill accent">optional</span>'}</span>
+        ${c.answer ? `<div class="ans">“${esc(c.answer)}”</div>` : ""}${fb}</div>`;
+    }).join("");
+  }
+
+  let lastReportRun = null;
+  async function renderRun(run) {
+    if (!run) { $("run").innerHTML = "No run yet."; $("runPill").innerHTML = ""; return; }
+    const cls = { completed: "ok", failed: "accent", cancelled: "accent" }[run.status] || "warn";
+    $("runPill").innerHTML = `<span class="pill ${cls}">${esc(run.status)}</span>`;
+    const ev = await api(`/v1/runs/${run.id}/events?limit=40`);
+    const events = (ev.data?.events || []).map((e) =>
+      `<div>${esc(e.created_at.slice(11, 19))} ${esc(e.phase || "")} <b>${esc(e.kind)}</b> ${esc(e.message)}</div>`).join("");
+    const spent = run.spent || {};
+    const phases = ["understand", "market_scan", "customer_insight", "opportunities", "focus_plan", "report"];
+    const done = new Set(run.completed_phases || []);
+    $("run").innerHTML = `
+      <div>${phases.map((p) => `<span class="pill ${done.has(p) ? "ok" : p === run.current_phase ? "warn" : ""}">${p}</span>`).join(" ")}</div>
+      <p class="muted" style="font-size:13px">${spent.steps ?? 0} model calls · ${spent.tokens ?? 0} tokens · $${(spent.cost_usd ?? 0).toFixed(2)} · ${Math.round(spent.wall_seconds ?? 0)}s${spent.stopped_by ? ` · stopped by ${esc(spent.stopped_by)}` : ""}${run.error ? `<br><span class="err">${esc(run.error)}</span>` : ""}</p>
+      <div class="events">${events || "No events yet."}</div>`;
+    const evBox = $("run").querySelector(".events"); evBox.scrollTop = evBox.scrollHeight;
+    if (run.status === "completed" && lastReportRun !== run.id) {
+      const rep = await api(`/v1/runs/${run.id}/report`);
+      if (rep.ok) {
+        const md = rep.data.report_md;
+        $("report").innerHTML = window.marked ? marked.parse(esc(md).replace(/&gt;/g, ">")) : `<pre>${esc(md)}</pre>`;
+        $("reportCard").hidden = false; lastReportRun = run.id;
+      }
+    }
+  }
+
+  function renderProposals(list) {
+    const pending = list.filter((p) => p.status === "pending").length;
+    $("propMeta").textContent = list.length ? `${pending} pending` : "";
+    if (!list.length) { $("proposals").innerHTML = "None yet."; return; }
+    const cls = { pending: "warn", accepted: "ok", rejected: "accent" };
+    $("proposals").classList.remove("muted");
+    $("proposals").innerHTML = list.map((p) => `<div class="prop">
+      <span class="pill ${cls[p.status]}">${esc(p.status)}</span> <span class="muted" style="font-size:12px">${esc(p.section)} · ${esc(p.kind)}</span>
+      <div><b>${esc(p.text)}</b></div><div class="muted" style="font-size:13px">${esc(p.rationale)}</div>
+      ${p.decision_note ? `<div style="font-size:13px">Reason: ${esc(p.decision_note)}</div>` : ""}</div>`).join("");
+  }
+
+  $("brand").addEventListener("change", (e) => {
+    brandId = e.target.value; store.set("brand", brandId); seenClaims.clear(); firstRender = true;
+    lastReportRun = null; $("reportCard").hidden = true; tick();
+  });
+  $("logout").addEventListener("click", () => { store.set("token", null); token = null; showLogin(); });
+  $("go").addEventListener("click", () => { token = $("tok").value.trim(); store.set("token", token); start(); });
+  $("tok").addEventListener("keydown", (e) => { if (e.key === "Enter") $("go").click(); });
+  start();
+})();
+</script>
+</body>
+</html>

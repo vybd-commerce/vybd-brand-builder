@@ -1,0 +1,22 @@
+id: competitors
+version: 1
+order: 8
+section: competitors
+required: false
+est_minutes: 1
+title: "Who else is out there?"
+lesson: >
+  Naming a few brands your customer might compare you to keeps you honest and
+  gives the Brand Brain a starting point for research. Include links if you have
+  them.
+example: >
+  An oat-milk startup in 2016 might have listed Silk, Califia Farms, and plain
+  dairy milk.
+task: >
+  List 1–3 competitors or comparable brands, with links if you know them.
+agent_instructions: >
+  This one is optional. Ask for 1–3 comparable brands. If they don't know any,
+  say it's fine to skip and move on. Don't search or suggest names for them.
+  Submit their words, including any links.
+quick_replies: []
+min_chars: 3

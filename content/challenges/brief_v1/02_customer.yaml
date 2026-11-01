@@ -1,0 +1,25 @@
+id: customer
+version: 1
+order: 2
+section: customer
+required: true
+est_minutes: 1.5
+title: "Who's it for?"
+lesson: >
+  Strong brands start with one specific person, not a demographic.
+  "Women 25–40" is a market. "A nurse who works 12-hour shifts and
+  hates how her scrubs fit" is a customer you can design for.
+example: >
+  "Runners training for their first marathon who are tired of
+  chafing on long runs." (Body Glide's early focus)
+task: >
+  Describe the one person most likely to buy this first. What's
+  their day like, and where do they already shop?
+agent_instructions: >
+  Ask the user this in your own words, one question at a time.
+  Do not invent an answer for them. If they say "everyone" or give
+  only an age range, ask them to picture one real person they know.
+  Keep it under two follow-ups. Then submit their answer in their
+  own words.
+quick_replies: []
+min_chars: 40

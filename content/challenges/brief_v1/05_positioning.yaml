@@ -1,0 +1,24 @@
+id: positioning
+version: 1
+order: 5
+section: positioning
+required: true
+est_minutes: 1.5
+title: "Why you?"
+lesson: >
+  Positioning is the one reason to pick you over the alternative. It's not a
+  list of features. Pick the single difference your customer cares about most
+  and say it so plainly it could be a tagline.
+example: >
+  "It's like milk, but made for humans." (Oatly, positioning oat milk against
+  dairy rather than other plant milks)
+task: >
+  In one sentence: why should your customer choose you instead of what they use
+  now?
+agent_instructions: >
+  Ask why their customer should choose them over the alternative they just
+  named. If they list several features, ask which one matters most to the
+  customer. Don't polish the sentence for them. At most two follow-ups, then
+  submit their words.
+quick_replies: []
+min_chars: 20

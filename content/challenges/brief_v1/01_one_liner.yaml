@@ -1,0 +1,22 @@
+id: one_liner
+version: 1
+order: 1
+section: one_liner
+required: true
+est_minutes: 1
+title: "What are you making?"
+lesson: >
+  If you can't say what you make in one breath, customers can't repeat it to a
+  friend. A good one-liner names the thing and who it's for, in plain words, with
+  no buzzwords.
+example: >
+  "Designer eyewear at a revolutionary price." (Warby Parker's early tagline)
+task: >
+  Describe your brand or product in one or two sentences, the way you'd explain
+  it to a friend.
+agent_instructions: >
+  Ask the founder what they're making, in your own words. If they give a long
+  pitch, ask them to say it as if texting a friend. Don't rewrite it for them.
+  At most one follow-up, then submit their words.
+quick_replies: []
+min_chars: 20
