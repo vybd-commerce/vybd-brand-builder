@@ -222,7 +222,7 @@ The left side is the `app` schema (owned by the server); the right side is the `
 | `packages/cli/src/vybd_cli/` | `main.py`, `client.py`, `config.py`, `render.py` |
 | `content/` | challenge YAMLs and the global agent instructions |
 | `evals/personas/` | 4 founder personas for end-to-end tests |
-| `scripts/` | `e2e_fake.py`, `curl_brief.sh`, `import_example-brand.py` |
-| `docs/` | DECISIONS, IDEAS, PROVIDER_NOTES, example-brand_MIGRATION, BACKLOG |
+| `scripts/` | `e2e_fake.py`, `curl_brief.sh` |
+| `docs/` | DECISIONS, IDEAS, PROVIDER_NOTES, BACKLOG |
 
 See [BACKLOG.md](BACKLOG.md) for what's next.

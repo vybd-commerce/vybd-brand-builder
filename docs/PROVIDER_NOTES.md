@@ -2,7 +2,6 @@
 
 Records which external API contracts are **confirmed** (tested live or read from source) and which are **not confirmed** (taken from docs). Update this file whenever a live test confirms or refutes a contract.
 
-The example-brand build's notes (Segmind, Vertex, supermemory) are kept verbatim in `PROVIDER_NOTES.example-brand.md` for reference.
 
 ---
 

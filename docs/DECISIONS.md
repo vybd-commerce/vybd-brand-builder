@@ -98,4 +98,4 @@ Choices not covered by the v0 spec (2026-11-01). Newest last.
 ## 2026-11-01: Persona e2e (Milestone 7) and example-brand (Milestone 8)
 - **`make e2e-fake`** starts a real uvicorn server and worker as subprocesses on a free port, drives the real CLI with `--json` (`python -m vybd_cli.main`), runs the clear-founder answers, waits for the run, accepts one proposal and rejects one, and writes `evals/runs/clear_founder-fake-<ts>.md`. `evals/runs/` is gitignored.
 - **Persona files** contain the persona's answers and a "what to watch" section, so a Claude-driven run has a grading rubric.
-- **The example-brand import** uses `source_type="import"` (accepted claims, `authority=user`), skips "Example copy" and images, and refuses to import twice without `--force`. `make seed` runs it. See `docs/example-brand_MIGRATION.md`.
+- **The example-brand import** uses `source_type="import"` (accepted claims, `authority=user`), skips "Example copy" and images, and refuses to import twice without `--force`. The import script and migration notes are kept private.

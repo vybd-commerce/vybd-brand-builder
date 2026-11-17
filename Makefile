@@ -3,7 +3,7 @@ ENV_FILE := $(if $(wildcard .env),--env-file .env,)
 UV := uv run $(ENV_FILE)
 PORT ?= 8000
 
-.PHONY: help sync db db-down migrate dev server worker test test-live lint fmt seed e2e-fake
+.PHONY: help sync db db-down migrate dev server worker test test-live lint fmt e2e-fake
 
 help:
 	@echo "make sync      install workspace deps (uv)"
@@ -16,7 +16,6 @@ help:
 	@echo "make test-live pytest -m live (real providers; needs LLM_API_KEY)"
 	@echo "make lint      ruff + import-linter"
 	@echo "make e2e-fake  scripted clear-founder run (server + worker + CLI, fake providers)"
-	@echo "make seed      import example-brand as a tenant (SEED_EMAIL=...)"
 
 sync:
 	uv sync
@@ -56,10 +55,6 @@ lint:
 fmt:
 	uv run ruff check --fix .
 	uv run ruff format .
-
-SEED_EMAIL ?= ashwin@vybd.ai
-seed: migrate
-	$(UV) python scripts/import_example-brand.py --owner-email $(SEED_EMAIL)
 
 e2e-fake: migrate
 	$(UV) python scripts/e2e_fake.py

@@ -180,9 +180,9 @@ Solid arrows show built connections. Dotted arrows lead to backlog items.
 
 | # | Item | Status | Notes |
 |---|---|---|---|
-| 21 | example-brand imported as a tenant | 🟩 | `make seed`; real-model import not yet run |
+| 21 | example-brand imported as a tenant | 🟩 | Import script kept private; real-model import not yet run |
 | 22 | Output store (`record_output` / `recent_outputs`) | ⬜ | Blocks the campaign-builder migration (anti-repetition) |
-| 23 | Campaign builder on the new brain (`context_pack`) | ⬜ | See example-brand_MIGRATION.md |
+| 23 | Campaign builder on the new brain (`context_pack`) | ⬜ | Migration notes kept private |
 | 24 | IG performance digests as proposals | ⬜ | The founder approves what the brand "learns" |
 | 25 | `make reembed` for embedding model changes | ⬜ | `claims.embed_model` is already stored |
 

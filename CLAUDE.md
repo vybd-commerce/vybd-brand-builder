@@ -45,7 +45,7 @@ scripts/curl_brief.sh # complete the whole brief over HTTP (needs a running serv
 - [x] M5: scoring + submit
 - [x] M6: runner
 - [x] M7: persona e2e (Claude-driven persona runs: see below)
-- [x] M8: example-brand as tenant (`make seed`, docs/example-brand_MIGRATION.md)
+- [x] M8: pilot brand imported as a tenant (import script kept private)
 
 ## Persona run
 Use this to test the whole product as a founder would experience it. You play **both** roles: the agent driving the CLI (follow `agent_instructions` exactly) and the founder (answer only as the persona file says).
